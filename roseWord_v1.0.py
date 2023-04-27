@@ -100,10 +100,16 @@ def login():
 
 
    else:
-      user = request.args.get('Name')
-      print(user)
-      return "注册成功"
-      return redirect(url_for('success',name = user))
+      name = request.args.get('Name')
+      pageCode = request.args.get('referring_page')
+      words = request.args.get('Words')
+      read_res = 读取数据(pageCode)
+      if(read_res=='null_name'):
+          更新数据(pageCode, name, words)
+          return f'{name}你好，我想对你说:{words}'
+      elif(read_res=='null'):
+          return "数据不存在！"
+      return "请不要重复提交表单"
 def is_prime(n):
     """判断一个数是否是质数"""
     if n < 2:
