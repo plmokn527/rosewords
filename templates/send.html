@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>输入</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            background-color: #f2f2f2;
+        }
+
+        #container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+        }
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: stretch;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .input-container input, 
+        .input-container textarea {
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        #recipient-input {
+            height: 2em;
+        }
+
+        #message-input {
+            height: 5em;
+            min-height: calc(2em * 5);
+            resize: none;
+        }
+
+        #submit-btn {
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #008CBA;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        #submit-btn:hover {
+            background-color: #005F6B;
+        }
+
+        #word-count {
+            font-size: 12px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <form id="message-form" action="/rose_words/success" method="post">
+        <div class="input-container">
+            <p>欢迎你来到这里！这里是鲜花编号{{ myPageCode }}的网络空间，请在这里留言吧，你写下的内容将被保留在该二维码上，注意你只有一次编辑的机会，一旦点击提交就不能再修改了</p>
+            <label for="recipient-input">输入接收者：</label>
+            <input type="text" id="recipient-input" name="recipient" placeholder="请输入接收者姓名">
+        </div>
+        <div class="input-container">
+            <label for="message-input">输入消息内容：</label>
+            <textarea id="message-input" name="message" placeholder="请输入消息内容"></textarea>
+            <div id="word-count"></div>
+        </div>
+        <input type="hidden" name="pagecode" value="{{ myPageCode }}">
+        <button type="submit" id="submit-btn">提交</button>
+    </form>
+</div>
+
+<script>
+    const recipientInput = document.querySelector('#recipient-input');
+    const messageInput = document.querySelector('#message-input');
+    const wordCount = document.querySelector('#word-count');
+    const submitBtn = document.querySelector('#submit-btn');
+
+    // 不需要发送AJAX请求，因为已经使用了传统的表单提交
+
+    messageInput.addEventListener('input', () => {
+        messageInput.style.height = "auto";
+        messageInput.style.height = `${Math.max(messageInput.scrollHeight, recipientInput.offsetHeight * 5)}px`;
+
+        const count = messageInput.value.length;
+        wordCount.textContent = `${count}个字`;
+    });
+</script>
+
+</body>
+</html>
