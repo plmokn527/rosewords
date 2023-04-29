@@ -7,7 +7,7 @@
 	<style>
 		body {
 			background-color: #f2f2f2;
-			font-family: Arial, sans-serif;
+			font-family: "KaiTi", "楷体", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
 			font-size: 50px; /* 增大字体 */
 			line-height: 1.5;
 			margin: 0;
@@ -45,21 +45,44 @@
 				font-size: 28px; /* 增大字体 */
 			}
 		}
+
+		#about-btn {
+			position: fixed;
+			bottom: 20px;
+			right: 20px;
+			background-color: #4CAF50;
+			border: none;
+			color: white;
+			padding: 15px 32px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			border-radius: 5px;
+		}
+
 	</style>
 </head>
 <body>
 	<div class="grid">
 		<div class="grid-item"></div>
 	</div>
-
+	<button id="about-btn">关于</button>
 	<script>
 	    const name = "{{name}}";
 	    const pagecode = "{{pagecode}}";
-	    const text2 = "{{words}}";
+	    const text2 = "阿斯顿撒旦撒旦撒{{words}}";
 	    const t1="亲爱的"
 	    const text1 = `${t1}${name}:`;
 		const gridItem = document.querySelector('.grid-item');
 		let currentIndex = 0;
+		const aboutBtn = document.querySelector('#about-btn');
+
+		function showAuthorInfo() {
+			alert('这是在校大学生的一个创新项目，联系作者\n邮箱: 2274525371@qq.com\nqq：2274525371\n版权所有 © 2023');
+		}
+
+		aboutBtn.addEventListener('click', showAuthorInfo);
 
 		function type(text, callback) {
 			if (currentIndex >= text.length) {
@@ -85,11 +108,15 @@
 
 		type(text1, () => {
 			setTimeout(() => {
-				gridItem.innerHTML += '<br><br>&nbsp;&nbsp;';
-				currentIndex = 0;
-				type(text2);
-			}, 500);
-		});
-	</script>
+				gridItem.innerHTML += '<br><br>';
+				const spaceElement = document.createElement('span');
+spaceElement.innerHTML = '  ';
+gridItem.appendChild(spaceElement);
+currentIndex = 0;
+type(text2);
+}, 500);
+});
+
+</script>
 </body>
 </html>

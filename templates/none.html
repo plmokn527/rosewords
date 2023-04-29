@@ -1,17 +1,122 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>你好，{{ name }}</title>
+	<style>
+		body {
+			background-color: #f2f2f2;
+			font-family: "KaiTi", "楷体", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+			font-size: 50px; /* 增大字体 */
+			line-height: 1.5;
+			margin: 0;
+			padding: 0;
+		}
+
+		.grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+			grid-gap: 1px;
+
+			background-color: #ddd;
+			padding: 1px;
+		}
+
+		.grid-item {
+			background-color: #fff;
+			padding: 10px;
+			border: 1px solid #ccc;
+			text-align: left;
+			white-space: pre-wrap;
+			font-size: 50px; /* 增大字体 */
+			overflow-wrap: break-word;
+			word-wrap: break-word;
+			word-break: break-all;
+		}
+
+		@media (max-width: 767px) {
+			.grid {
+				grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+			}
+
+			.grid-item {
+				padding: 5px;
+				font-size: 28px; /* 增大字体 */
+			}
+		}
+
+		#about-btn {
+			position: fixed;
+			bottom: 20px;
+			right: 20px;
+			background-color: #4CAF50;
+			border: none;
+			color: white;
+			padding: 15px 32px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			border-radius: 5px;
+		}
+
+	</style>
 </head>
 <body>
-      <form action = "http://localhost:5000/rose_words/success" method = "post">
-         <p>Enter Name:</p>
-         <p><input type = "text" name = "Name" /></p>
-          <p>Enter words:</p>
-         <p><input type = "text" name = "Words" /></p>
-          <input type="hidden" name="referring_page" value="{{ myPageCode }}">
-         <p><input type = "submit" value = "submit" /></p>
-      </form>
+	<div class="grid">
+		<div class="grid-item"></div>
+	</div>
+	<button id="about-btn">关于</button>
+	<script>
+	    const name = "{{name}}";
+	    const pagecode = "{{pagecode}}";
+	    const text2 = "阿斯顿撒旦撒旦撒{{words}}";
+	    const t1="亲爱的"
+	    const text1 = `${t1}${name}:`;
+		const gridItem = document.querySelector('.grid-item');
+		let currentIndex = 0;
+		const aboutBtn = document.querySelector('#about-btn');
+
+		function showAuthorInfo() {
+			alert('这是在校大学生的一个创新项目，联系作者\n邮箱: 2274525371@qq.com\nqq：2274525371\n版权所有 © 2023');
+		}
+
+		aboutBtn.addEventListener('click', showAuthorInfo);
+
+		function type(text, callback) {
+			if (currentIndex >= text.length) {
+				if (callback) {
+					callback();
+				}
+				return;
+			}
+
+			const currentChar = text[currentIndex];
+			const isLineBreak = currentChar === '\n';
+
+			if (isLineBreak) {
+				gridItem.innerHTML += '<br>';
+			} else {
+				gridItem.innerHTML += currentChar;
+			}
+
+			currentIndex++;
+
+			setTimeout(() => type(text, callback), 90);
+		}
+
+		type(text1, () => {
+			setTimeout(() => {
+				gridItem.innerHTML += '<br><br>';
+				const spaceElement = document.createElement('span');
+spaceElement.innerHTML = '  ';
+gridItem.appendChild(spaceElement);
+currentIndex = 0;
+type(text2);
+}, 500);
+});
+
+</script>
 </body>
 </html>

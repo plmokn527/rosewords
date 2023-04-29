@@ -21,6 +21,25 @@
             justify-content: flex-start;
             align-items: center;
             background-color: #f2f2f2;
+            position: relative;
+        }
+
+        /* 添加悬浮按钮样式 */
+        #about-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #008CBA;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        #about-btn:hover {
+            background-color: #005F6B;
         }
 
         #container {
@@ -42,7 +61,7 @@
             margin-bottom: 20px;
         }
 
-        .input-container input, 
+        .input-container input,
         .input-container textarea {
             width: 100%;
             border: 1px solid #ccc;
@@ -85,7 +104,7 @@
 </head>
 <body>
 <div id="container">
-    <form id="message-form" action="/rose_words/success" method="post">
+    <form id="message-form" action="/rose_words/success" method="post" onsubmit="return validateForm()">
         <div class="input-container">
             <p>欢迎你来到这里！这里是鲜花编号{{ myPageCode }}的网络空间，请在这里留言吧，你写下的内容将被保留在该二维码上，注意你只有一次编辑的机会，一旦点击提交就不能再修改了</p>
             <label for="recipient-input">输入接收者：</label>
@@ -100,14 +119,35 @@
         <button type="submit" id="submit-btn">提交</button>
     </form>
 </div>
+<!-- 添加悬浮按钮 -->
+<button id="about-btn">关于</button>
 
 <script>
     const recipientInput = document.querySelector('#recipient-input');
     const messageInput = document.querySelector('#message-input');
     const wordCount = document.querySelector('#word-count');
     const submitBtn = document.querySelector('#submit-btn');
+    const aboutBtn = document.querySelector('#about-btn');
 
-    // 不需要发送AJAX请求，因为已经使用了传统的表单提交
+    function validateForm() {
+        const recipientValue = recipientInput.value.trim();
+        const messageValue = messageInput.value.trim();
+        const messageLength = messageValue.length;
+
+        if (recipientValue === '' || messageValue === '') {
+            alert('请输入内容');
+            return false;
+        } else if (messageLength > 1000) {
+            alert('输入的字数不能超过1000个字');
+            return false;
+        } else {
+            return confirm('一旦提交就无法再修改内容，是否确认提交？');
+        }
+    }
+
+    function showAuthorInfo() {
+        alert('这是在校大学生的一个创新项目，欢迎联系作者\n邮箱：2274525371@qq.com\nqq：2274525371');
+    }
 
     messageInput.addEventListener('input', () => {
         messageInput.style.height = "auto";
@@ -116,7 +156,11 @@
         const count = messageInput.value.length;
         wordCount.textContent = `${count}个字`;
     });
+
+    // 添加点击事件监听器
+    aboutBtn.addEventListener('click', showAuthorInfo);
 </script>
 
 </body>
 </html>
+
