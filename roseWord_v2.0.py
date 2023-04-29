@@ -90,12 +90,13 @@ def 插入单条数据(页码,名字,想说的话):
 @app.route("/rose_words/<pageCode>")
 def index1(pageCode):
     get = 读取数据(pageCode)
+    编号 = pageCode[-5:]
     if(get=="null_page"):
         return '抱歉，不存在该数据！'
     elif(get=="null_name"):
-        return render_template('send.html', myPageCode=pageCode)
+        return render_template('send.html', myPageCode=pageCode,id=编号)
     #return f'hello,{get[1]},我想对你说:{get[2]}'
-    return render_template('login.html',name = get[1],pagecode = pageCode,words=get[2])
+    return render_template('login.html',name = get[1],pagecode = pageCode,words=get[2],id=编号)
 @app.route('/rose_words/success',methods = ['POST', 'GET'])
 def login():
    if request.method == 'POST':
