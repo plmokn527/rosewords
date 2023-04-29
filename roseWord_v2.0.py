@@ -149,6 +149,8 @@ if __name__ == '__main__':
             codepage = hashlib.md5(s.encode()).hexdigest()
             插入单条数据(codepage, 'null', 'null')
     app.run(host='0.0.0.0')
+
+
 # ('d2ddea18f00665ce8623e36bd4e3c7c5', 'null', 'null')
 # ('d1fe173d08e959397adf34b1d77e88d7', 'null', 'null')
 # ('fe9fc289c3ff0af142b6d3bead98a923', 'null', 'null')
