@@ -58,16 +58,34 @@
             height: auto;
         }
 
+        /* 图片放大样式 */
+        .zoomed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .zoomed img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
     </style>
 
 </head>
 <body>
 <div id="container">
     <p>江滩公园照片墙<br><br></p>
-<img  src="https://pcsdata.baidu.com/thumbnail/fd449b4f9k892494445a0c5b19907717?fid=3194696586-16051585-996448106221411&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-gcOO9URkn3FJiCGf3Z%2F8Y5l7kYs%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=491984642015891740&dp-callid=0&time=1682924400&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video"><br><br>
-<img  src="https://pcsdata.baidu.com/thumbnail/c48b9c979r82795ee60e72905ede1d11?fid=3194696586-16051585-1078672497206169&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-Y52YRzZEsLpxynRtqaCJdenxqJA%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=492013381223314169&dp-callid=0&time=1682924400&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video"><br><br>
-<img  src="https://pcsdata.baidu.com/thumbnail/f54a3efeftc273e33a840c541d4e2020?fid=3194696586-16051585-179035151230060&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-LSjPUrvo3BBCOzP65Or5t%2Fzcahw%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=492013381223314169&dp-callid=0&time=1682924400&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video"><br><br>
-<img  src="https://pcsdata.baidu.com/thumbnail/26c036ed6l6d044924bf772f538f4a05?fid=3194696586-16051585-102806458903174&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-%2B2dMN8P1VHuqekSSyjsmSfzK06o%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=492013381223314169&dp-callid=0&time=1682924400&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video"><br><br>
+    <img class="downloadable-image" src="https://pcsdata.baidu.com/thumbnail/fd449b4f9k892494445a0c5b19907717?fid=3194696586-16051585-996448106221411&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-gcOO9URkn3FJiCGf3Z%2F8Y5l7kYs%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=491984642015891740&dp-callid=0&time=1682924400&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video"><br><br>
+    <img class="downloadable-image" src="https://pcsdata.baidu.com/thumbnail/f54a3efeftc273e33a840c541d4e2020?fid=3194696586-16051585-179035151230060&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-LSjPUrvo3BBCOzP65Or5t%2Fzcahw%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=492013381223314169&dp-callid=0&time=1682924400&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video"><br><br>
+    <img class="downloadable-image" src="https://pcsdata.baidu.com/thumbnail/26c036ed6l6d044924bf772f538f4a05?fid=3194696586-16051585-102806458903174&rt=pr&sign=FDTAER-yUdy3dSFZ0SVxtzShv1zcMqd-%2B2dMN8P1VHuqekSSyjsmSfzK06o%3D&expires=2h&chkv=0&chkbd=0&chkpc=&dp-logid=492013381223314169&dp-callid=0&time=1682924400&bus_no=26&size=c1600_u1600&quality=100&vuk=-&ft=video"><br><br>
 
 </div>
 <!-- 添加悬浮按钮 -->
@@ -75,8 +93,6 @@
 
 <script>
     const aboutBtn = document.querySelector('#about-btn');
-    const image = document.getElementById('downloadable-image');
-    
     function showAuthorInfo() {
         alert('这是在校大学生的一个创新项目，联系作者\nqq：2274525371');
     }
@@ -84,18 +100,27 @@
     // 添加点击事件监听器
     aboutBtn.addEventListener('click', showAuthorInfo);
 
-    function downloadImage() {
-        const imageURL = image.src;
-        const link = document.createElement('a');
-        link.href = imageURL;
-        link.download = 'download-image.jpg';
-        link.style.display = 'none';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+    // 图片放大功能
+    function zoomImage(event) {
+        const zoomed = document.createElement('div');
+        zoomed.classList.add('zoomed');
+
+        const img = document.createElement('img');
+        img.src = event.target.src;
+        zoomed.appendChild(img);
+
+        document.body.appendChild(zoomed);
+
+        zoomed.addEventListener('click', () => {
+            document.body.removeChild(zoomed);
+        });
     }
 
-    image.addEventListener('click', downloadImage);
+    const images = document.querySelectorAll('.downloadable-image');
+    images.forEach(image => {
+        image.addEventListener('click', zoomImage);
+    });
+
 </script>
 
 </body>

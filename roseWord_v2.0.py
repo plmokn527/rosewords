@@ -2,6 +2,7 @@ import hashlib
 from flask import Flask, render_template, redirect, url_for, request, jsonify
 import sqlite3
 import os
+import pandas as pd
 app = Flask(__name__)
 def 新建数据库():
     if os.path.exists('data.db'):
@@ -99,9 +100,28 @@ def index1(pageCode):
         return render_template('send.html', myPageCode=pageCode,id=编号)
     #return f'hello,{get[1]},我想对你说:{get[2]}'
     return render_template('login.html',name = get[1],pagecode = pageCode,words=get[2],id=编号)
-@app.route("/jiangtangongyuan")
-def jiangtangongyuan():
-    return render_template("jiangtangongyuan.html")
+
+def 获取图片链接数据(地名):
+    ###获取数据
+    数据 = pd.read_excel(f'{地名}.xlsx')
+    图片的链接 = []
+    图片的描述 = []
+    dat = []
+    for myUrl in 数据['图片的链接']:
+        图片的链接.append(myUrl)
+    for myDescribe in 数据['图片的描述']:
+        图片的描述.append(myDescribe)
+    dat.append(图片的链接)
+    dat.append(图片的描述)
+    return dat
+
+@app.route("/places/<placename>")
+def jiangtangongyuan(placename):
+    获取图片链接数据(placename)
+    if os.path.exists(f'{placename}.xlsx') == False:
+        return "抱歉，数据库未建立！"
+    dat = 获取图片链接数据(placename)
+    return render_template("placesPics.html",picDat = dat , placeName = placename)
 @app.route('/rose_words/success',methods = ['POST', 'GET'])
 def login():
    if request.method == 'POST':
