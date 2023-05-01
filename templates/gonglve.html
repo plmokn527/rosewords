@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>输入</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            background-color: #f2f2f2;
+            position: relative;
+        }
+
+        /* 添加悬浮按钮样式 */
+        #about-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #008CBA;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        #about-btn:hover {
+            background-color: #005F6B;
+        }
+
+        #container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+        }
+
+        /* 使图片宽度自适应并占满全屏 */
+        img {
+            width: 100%;
+            height: auto;
+        }
+
+    </style>
+
+</head>
+<body>
+<div id="container">
+    <p>作为重庆本地花花，必须热烈欢迎来自全国各地的你们到这里玩，并且乖乖给你附上攻略，让你们以后一想到重庆都是满满的美好回忆！<br><br></p>
+    <p>五一天气：15-26度</p>
+    <p>穿衣指南：短袖</p>
+    <p>必带物品：雨伞/防晒/充电器<br><br></p>
+    <p>来重庆必打卡推荐：(点击可以跳转到详情页面，有很多图片哦)<br><br></p>
+    <img id="downloadable-image"  src="{{ url_for('static', filename='pics/001.png') }}"><br><br>
+
+</div>
+<!-- 添加悬浮按钮 -->
+<button id="about-btn">关于</button>
+
+<script>
+    const aboutBtn = document.querySelector('#about-btn');
+    const image = document.getElementById('downloadable-image');
+    
+    function showAuthorInfo() {
+        alert('这是在校大学生的一个创新项目，联系作者\nqq：2274525371');
+    }
+
+    // 添加点击事件监听器
+    aboutBtn.addEventListener('click', showAuthorInfo);
+
+    function downloadImage() {
+<!--        const imageURL = image.src;-->
+<!--        const link = document.createElement('a');-->
+<!--        link.href = imageURL;-->
+<!--        link.download = 'download-image.jpg';-->
+<!--        link.style.display = 'none';-->
+<!--        document.body.appendChild(link);-->
+<!--        link.click();-->
+<!--        document.body.removeChild(link);-->
+    }
+
+    image.addEventListener('click', downloadImage);
+</script>
+
+</body>
+</html>

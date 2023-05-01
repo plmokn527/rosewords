@@ -89,6 +89,8 @@ def 插入单条数据(页码,名字,想说的话):
     return  "插入数据成功！"
 @app.route("/rose_words/<pageCode>")
 def index1(pageCode):
+    if(pageCode == "gonglve"):
+        return render_template('gonglve.html')
     get = 读取数据(pageCode)
     编号 = pageCode[-5:]
     if(get=="null_page"):
