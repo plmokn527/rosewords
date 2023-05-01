@@ -99,6 +99,9 @@ def index1(pageCode):
         return render_template('send.html', myPageCode=pageCode,id=编号)
     #return f'hello,{get[1]},我想对你说:{get[2]}'
     return render_template('login.html',name = get[1],pagecode = pageCode,words=get[2],id=编号)
+@app.route("/jiangtangongyuan")
+def jiangtangongyuan():
+    return render_template("jiangtangongyuan.html")
 @app.route('/rose_words/success',methods = ['POST', 'GET'])
 def login():
    if request.method == 'POST':
