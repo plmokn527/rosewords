@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>江滩公园</title>
+    <title>{{placeName}}</title>
     <style>
         * {
             box-sizing: border-box;
@@ -94,13 +94,12 @@
     <p>{{placeName}}照片墙<br><br></p>
 </div>
 <button id="about-btn">关于</button>
-
 <script>
     const picData = {{ picDat | tojson }};
     const aboutBtn = document.querySelector('#about-btn');
 
     function showAuthorInfo() {
-        alert('这是在校大学生的一个创新项目，联系作者\nqq：2274525371');
+        alert('所有图片均搜集自网络，如果有侵权的地方请联系\nqq：2274525371');
     }
 
     aboutBtn.addEventListener('click', showAuthorInfo);
