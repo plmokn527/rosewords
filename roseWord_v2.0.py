@@ -125,34 +125,31 @@ def jiangtangongyuan(placename):
 @app.route('/rose_words/success',methods = ['POST', 'GET'])
 def login():
    if request.method == 'POST':
-      #name = request.form.get('recipient')
-      #words = request.form.get('message')
-      #pageCode = request.form.get('pagecode')
       name = request.form['recipient']
       pageCode = request.form['pagecode']
       words = request.form['message']
+      words = words.replace('\r\n', '@@@')
       read_res = 读取数据(pageCode)
       if(read_res=='null_name'):
           更新数据(pageCode, name, words)
-          #return f'{name}你好，我想对你说:{words}'
           return render_template('login.html',name = name,pagecode = pageCode,words=words)
       elif(read_res=='null'):
           return "数据不存在！"
       return "请不要重复提交表单"
 
-
    else:
       name = request.args.get('Name')
       pageCode = request.args.get('referring_page')
       words = request.args.get('Words')
+      words = words.replace('\r\n', '@@@')
       read_res = 读取数据(pageCode)
       if(read_res=='null_name'):
           更新数据(pageCode, name, words)
-          #return f'{name}你好，我想对你说:{words}'
-          return render_template('index', name=name)
+          return render_template('login.html',name = name,pagecode = pageCode,words=words)
       elif(read_res=='null'):
           return "数据不存在！"
       return "请不要重复提交表单"
+
 def is_prime(n):
     """判断一个数是否是质数"""
     if n < 2:

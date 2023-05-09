@@ -46,7 +46,12 @@ def is_prime(n):
             return False
     return True
 
-
+def 更新数据(页码,名字,话语):
+    conn = sqlite3.connect('data.db')
+    c = conn.cursor()
+    c.execute("UPDATE User SET Name = ?, Words = ? WHERE PageCode = ?", (名字, 话语, 页码))
+    conn.commit()
+    conn.close()
 primes = []
 n = 2
 while len(primes) < 100:
@@ -56,4 +61,10 @@ while len(primes) < 100:
 for i in range(20, 100):
     s = f'{primes[i]}'
     codepage = hashlib.md5(s.encode()).hexdigest()
-    print(读取数据(codepage))
+    ns = 读取数据(codepage)
+    if( ns !='null_name'):
+        print(ns)
+        new = ns[2].replace('\r\n','@@@')
+        更新数据(ns[0],ns[1],new)
+
+

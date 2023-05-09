@@ -77,7 +77,10 @@
 	<script>
 	    const name = "{{name}}";
 	    const pagecode = "{{pagecode}}";
-	    const text2 = "{{words}}";
+const text2 = "{{words}}".replace(/@@@/g, '\n');
+
+		console.log("Words:", text2);
+
 	    const t1="亲爱的"
 	    const text1 = `${t1}${name}:`;
 		const gridItem = document.querySelector('.grid-item');
@@ -91,6 +94,7 @@
 		aboutBtn.addEventListener('click', showAuthorInfo);
 
 		function type(text, callback) {
+
 			if (currentIndex >= text.length) {
 				if (callback) {
 					callback();
