@@ -12,6 +12,18 @@
 			line-height: 1.5;
 			margin: 0;
 			padding: 0;
+			position: relative;
+		}
+
+		body::before {
+			content: "花印记";
+			position: absolute;
+			font-size: 200px; /* 设置花印记字体大小 */
+			color: rgba(0, 0, 0, 0.1); /* 设置花印记字体颜色和透明度 */
+			z-index: -1; /* 确保花印记在内容之后 */
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%); /* 让花印记位于页面中心 */
 		}
 
 		.grid {
@@ -67,21 +79,18 @@
 
 </head>
 <body>
-	<a id = "travel_link" href="http://47.120.42.84:5000/rose_words/gonglve" >重庆旅游攻略，请点我!</a>
-
 	<div class="grid">
-
 		<div class="grid-item"></div>
 	</div>
 	<button id="about-btn">关于</button>
 	<script>
 	    const name = "{{name}}";
 	    const pagecode = "{{pagecode}}";
-const text2 = "{{words}}".replace(/@@@/g, '\n');
+	    const text2 = "{{words}}".replace(/@@@/g, '\n');
 
 		console.log("Words:", text2);
 
-	    const t1="亲爱的"
+	    const t1=""
 	    const text1 = `${t1}${name}:`;
 		const gridItem = document.querySelector('.grid-item');
 		let currentIndex = 0;
@@ -106,26 +115,26 @@ const text2 = "{{words}}".replace(/@@@/g, '\n');
 			const isLineBreak = currentChar === '\n';
 
 			if(isLineBreak) {
-gridItem.innerHTML += '<br>';
-} else {
-gridItem.innerHTML += currentChar;
-}
+				gridItem.innerHTML += '<br>';
+			} else {
+				gridItem.innerHTML += currentChar;
+			}
 				currentIndex++;
 
-		setTimeout(() => type(text, callback), 90);
-	}
+			setTimeout(() => type(text, callback), 90);
+		}
 
-	type(text1, () => {
-		setTimeout(() => {
-			gridItem.innerHTML += '<br><br>';
-			const spaceElement = document.createElement('span');
-			spaceElement.innerHTML = '&emsp;&emsp;';
-			gridItem.appendChild(spaceElement);
-			currentIndex = 0;
-			type(text2);
-		}, 500);
-	});
+		type(text1, () => {
+			setTimeout(() => {
+				gridItem.innerHTML += '<br><br>';
+				const spaceElement = document.createElement('span');
+				spaceElement.innerHTML = '&emsp;&emsp;';
+				gridItem.appendChild(spaceElement);
+				currentIndex = 0;
+				type(text2);
+			}, 500);
+		});
 
-</script>
+	</script>
 </body>
 </html>
