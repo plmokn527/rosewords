@@ -150,6 +150,7 @@ def login():
           return "数据不存在！"
       return "请不要重复提交表单"
 
+
 def is_prime(n):
     """判断一个数是否是质数"""
     if n < 2:

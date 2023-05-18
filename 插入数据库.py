@@ -19,6 +19,7 @@ def 插入单条数据(页码,名字,想说的话):
     # 获取该数据库的游标
     cursor = conn.cursor()
 
+
     # 执行单条数据插入，并返回操作行数
 
     sql = "INSERT INTO User (PageCode,Name, Words) VALUES (?, ?, ?)"
