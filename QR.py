@@ -20,11 +20,11 @@ if not os.path.exists(OUTPUT_DIR):
 
 primes = []
 n = 2
-while len(primes) < 100:
+while len(primes) < 500:
     if is_prime(n):
         primes.append(n)
     n += 1
-for i in range(20, 100):
+for i in range(101, 300):
     s = f'{primes[i]}'
     codepage = hashlib.md5(s.encode()).hexdigest()
     url='http://47.120.42.84:5000/rose_words/'+codepage
